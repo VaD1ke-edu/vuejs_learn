@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-on:input="updateName" v-bind:value="name" v-on:keyup="onKeyUp">
+        <p>{{name}}</p>
+        <p>I am {{ age }}</p>
+        <p>{{ sayHello() }}</p>
+        <a target="blank" v-bind:href="link">google</a>
+        <p v-html="linkHtml"></p>
+        <input type="text" v-model="name">
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

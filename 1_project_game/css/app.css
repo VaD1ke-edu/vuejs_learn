@@ -45,6 +45,11 @@
     background-color: #ffc0c1;
 }
 
+.log ul .heal {
+    color: white;
+    background-color: #14de20;
+}
+
 button {
     font-size: 20px;
     background-color: #eee;

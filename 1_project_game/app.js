@@ -14,8 +14,8 @@ new Vue({
                 max: 15
             },
             heal: {
-                minHp: 5,
-                maxHp: 15
+                minHp: 7,
+                maxHp: 13
             }
         },
         monster: {
@@ -24,10 +24,6 @@ new Vue({
             damage: {
                 min: 4,
                 max: 14
-            },
-            heal: {
-                minHp: 2,
-                maxHp: 6
             }
         },
         logs: []
@@ -41,14 +37,16 @@ new Vue({
             this.logs       = [];
         },
 
-        heal: function () {
-            let healHp;
+        stop: function () {
+            this.isStarted = false;
+        },
 
-            healHp = this._heal(this.player);
+        heal: function () {
+            const healHp = this._heal(this.player);
             this._logHeal('player', healHp);
 
-            healHp = this._heal(this.monster);
-            this._logHeal('monster', healHp);
+            const damageVal = this._hit(this.monster, this.player);
+            this._logHit('monster', 'player', damageVal);
         },
 
         attack: function () {
@@ -71,7 +69,7 @@ new Vue({
         },
 
         giveUp: function () {
-            this.player.hp = 0;
+            this.isStarted = false;
         },
 
 
@@ -107,10 +105,6 @@ new Vue({
 
         _calcPercent: function (val, maxVal) {
             return Math.round(val / maxVal * 100);
-        },
-
-        notifyAboutEnd: function (message) {
-            alert(message);
         }
     },
 
@@ -121,18 +115,27 @@ new Vue({
 
         monsterHpPercent: function () {
             return this._calcPercent(this.monster.hp, this.monster.startHp);
-        },
+        }
+    },
 
-        checkFinish: function () {
-            const isPlayerDefeated  = this.player.hp <= 0;
-            const isMonsterDefeated = this.monster.hp <= 0;
-            if (isPlayerDefeated) {
-                this.notifyAboutEnd('Congratulations, you won');
+    watch: {
+        playerHpPercent: function (val) {
+            if (val > 0) return;
+
+            if (confirm('Unfortunately, you lost! New game?')) {
+                this.start();
+            } else {
+                this.stop();
             }
-            if (isMonsterDefeated) {
-                this.notifyAboutEnd('Unfortunately you failed');
+        },
+        monsterHpPercent: function (val) {
+            if (val > 0) return;
+
+            if (confirm('Congratulations, you won! New game?')) {
+                this.start();
+            } else {
+                this.stop();
             }
-            return isPlayerDefeated || isMonsterDefeated;
         }
     }
 });

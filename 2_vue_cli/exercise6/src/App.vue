@@ -1,13 +1,13 @@
 <template>
     <div class="container">
-        <header></header>
+        <app-header></app-header>
         <hr>
         <div class="row">
-            <server-list></server-list>
-            <server-details></server-details>
+            <app-server-list></app-server-list>
+            <app-server-details></app-server-details>
         </div>
         <hr>
-        <footer></footer>
+        <app-footer></app-footer>
     </div>
 </template>
 
@@ -19,10 +19,10 @@
 
     export default {
       'components': {
-          'header': Header,
-          'footer': Footer,
-          'server-list': ServerList,
-          'server-details': ServerDetails
+          'app-header': Header,
+          'app-footer': Footer,
+          'app-server-list': ServerList,
+          'app-server-details': ServerDetails
       }
     };
 </script>
